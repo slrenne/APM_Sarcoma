@@ -7,7 +7,9 @@ Sarcomas, a diverse range of malignant tumors, pose challenges due to limited tr
 
 ## Material and Methods
 
-We approached the analysis of APM defects by modeling it as a binomial distribution represented by a score. This score is influenced by the interplay of NPL with Core, Id, and APM. The entire network was conceptualized as a hierarchical Bayesian model, wherein parameters were estimated for NPL, Core and NPL, patient ID and NPL, and finally APM and NPL. Samples for NPL followed a normal distribution with a mean of 0 and a variance of 1. Except for NPL, other samples in this model were drawn from a multivariate normal distribution. The mean for each relationship in this distribution was set to 0, and the covariance matrix was determined by the variance-covariance matrix for each relationship. Histotypes, denoted as 8, were considered in the analysis, resulting in a covariance matrix for these relationships with a shape of 8x8. The correlation factor (R value) for each matrix was sampled from the LKJcorr distribution, with a chosen value of 2 to prevent divergent transitions.
+### APM Presence model 
+
+We approached the analysis of APM defects by modeling it as a binomial distribution represented by a score (present/absent). We built the model to gather score variation among the histotypes of the neoplasm (NPL), the area mapped by the Tisdue-Micro-Array's core (Core), the single patient (Id), and the APM protein studied (APM). The entire network was conceptualized as a hierarchical Bayesian model, wherein parameters were estimated for NPL, Core and NPL, patient ID and NPL, and finally APM and NPL. Samples for NPL followed a normal distribution with a mean of 0 and a variance of 1. Except for NPL, other samples in this model were drawn from a multivariate normal distribution. The mean for each relationship in this distribution was set to 0, and the covariance matrix was determined by the variance-covariance matrix for each relationship. Histotypes, denoted as 8, were considered in the analysis, resulting in a covariance matrix for these relationships with a shape of 8x8. The correlation factor (R value) for each matrix was sampled from the LKJcorr distribution, with a chosen value of 2 to have a mild regularization.
 
 
 ```math
@@ -104,6 +106,7 @@ R_\delta &\sim LKJcorr (2)\\
 \sigma_{\delta j} &\sim Exponential(1)  \text{ \tiny{for $j=1..8$}}\nonumber\\
 \end{align}
 ```
+### Survival Analysis Model 
 
 We conducted a survival analysis by modeling the time-to-event (T_i) as an exponential distribution and its log-complementary cumulative density function, akin to Cox survival analysis. The expected rate (λ_i) was transformed into the expected value μ_i, and a log link function was applied to the linear model, specifically an intercept-only model. The parameter α + β was modeled hierarchically using a Bayesian approach, estimating parameters for the APM status and histotype, and for the grading and histotype. These parameters were sampled from a multivariate normal distribution with a mean set to 0, and the covariance matrix was determined by the variance-covariance matrix of the presence of APM (and the grade) and the 8 histotypes denoted as H. Given a total of 8 sampled histotypes, the covariance matrix had a shape of 8x8. The correlation factor within the matrix was determined by R, which was sampled from the LKJcorr distribution with a chosen shape parameter of 2. To alleviate divergent transitions, we employed the non-centered version of the model.
 
