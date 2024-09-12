@@ -210,3 +210,7 @@ The following softwares were used for developing and running this project:
 ## License
 
 This project is licensed under the Creative Commons Attribution 4.0 International.
+
+## Acknowledgements
+
+This study was supported by Ricerca Finalizzata 2021 by Italian Ministry of Health—Giovani Ricercatori (GR)—“Change promoting,” project code GR-2021-12373209. We express our gratitude to the reSeARChOMA group, the institutional translational research group on sarcoma of Humanitas University.
